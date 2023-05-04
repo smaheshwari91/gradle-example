@@ -7,10 +7,14 @@ on:
 
 jobs:
   build:
-    name: Build
-    runs-on: java11
+   strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+      fail-fast: false
+   runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v2
+      - name Checkout
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: Build and analyze
